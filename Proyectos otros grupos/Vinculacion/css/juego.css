@@ -1,0 +1,50 @@
+.contenedor{
+    background: url(../imagenes/piso.png) left bottom repeat-x,
+    url(../imagenes/nubes.png) left top repeat-x ;
+    background-color: #a4d3ff;
+    height: 650px;
+    width: 1500px;
+    border: 5px solid rgb(16, 196, 31);
+    margin: auto;
+    padding: 0px;
+    text-align: center;
+}
+.contenedorini{
+    background-color: #a4d3ff;
+    height: 650px;
+    width: 1500px;
+    border: 5px solid rgb(16, 196, 31);
+    margin: auto;
+    padding: 0px;
+    text-align: center;
+}
+.titulo{
+    background-color: rgb(166, 87, 202);
+    padding: auto;
+    text-align: center;
+    font-size: 40px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: turquoise;
+}
+
+.goku{
+    margin-top: 330px;
+    height: 300px;
+}
+
+.mario{
+    margin-top: 265px;
+    height: 500px;
+}
+
+.naruto{
+    margin-top: 440px;
+    height: 200px;
+}
+
+.pikachu{
+    margin-top: 475px;
+}
+.pug{
+    margin-top: 470px;
+}
