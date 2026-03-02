@@ -1,4 +1,4 @@
-# MasterChefEC - Ecommerce de Cosméticos
+# Sistema de Cosméticos - FastAPI
 
 Ecommerce de cosméticos enfocado a mujeres con diseño moderno y elegante.
 
