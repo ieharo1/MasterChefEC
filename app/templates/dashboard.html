@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Dashboard - MasterChefEC{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">
+        <i class="fas fa-user-circle me-2"></i>Bienvenida, {{ user.name }}
+    </h2>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+                    <h5>Mi Carrito</h5>
+                    <a href="/cart" class="btn btn-primary">Ver Carrito</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-box fa-3x text-primary mb-3"></i>
+                    <h5>Mis Pedidos</h5>
+                    <a href="/orders" class="btn btn-primary">Ver Pedidos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-store fa-3x text-primary mb-3"></i>
+                    <h5>Productos</h5>
+                    <a href="/products" class="btn btn-primary">Explorar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if user.role.value == 'admin' %}
+    <div class="mt-4">
+        <h3>Panel de Administración</h3>
+        <div class="row g-4 mt-2">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-cogs fa-2x text-primary"></i>
+                        <p class="mt-2">Gestión Admin</p>
+                        <a href="/admin" class="btn btn-sm btn-primary">Acceder</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-boxes fa-2x text-primary"></i>
+                        <p class="mt-2">Productos</p>
+                        <a href="/admin/products" class="btn btn-sm btn-primary">Gestionar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-tags fa-2x text-primary"></i>
+                        <p class="mt-2">Categorías</p>
+                        <a href="/admin/categories" class="btn btn-sm btn-primary">Gestionar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                        <p class="mt-2">Usuarios</p>
+                        <a href="/admin/users" class="btn btn-sm btn-primary">Gestionar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

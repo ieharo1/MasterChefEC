@@ -1,28 +1,68 @@
-# 👨‍🍳 MasterChef EC
+# MasterChefEC - Ecommerce de Comestibles
 
-Proyecto web relacionado con cocina y gastronomía ecuatoriana desarrollado por **Isaac Esteban Haro Torres**.
+Ecommerce de comestibles enfocado a mujeres con diseño moderno y elegante.
 
 ---
 
 ## 📝 Descripción
 
-Aplicación web para compartir recetas de cocina tradicional ecuatoriana.
-
----
-
-## ✨ Características
-
-- Recetas ecuatorianas
-- Galería de imágenes
-- Búsqueda de recetas
-- Categorías por tipo de plato
+Sistema completo de comercio electrónico para comestibles con:
+- Catálogo de productos
+- Carrito de compras
+- Gestión de pedidos
+- Panel de administración
+- Autenticación JWT
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-- HTML/CSS/JavaScript
-- Backend (Node.js/Python)
+- **Backend:** FastAPI (Python)
+- **Base de datos:** MongoDB
+- **Frontend:** HTML5, Bootstrap 5, Jinja2
+- **Autenticación:** JWT con bcrypt
+
+---
+
+## ⚙️ Instalación
+
+### 1. Crear entorno virtual
+```bash
+python -m venv venv
+```
+
+### 2. Activar entorno virtual
+```bash
+# Windows
+venv\Scripts\activate
+
+# Linux/Mac
+source venv/bin/activate
+```
+
+### 3. Instalar dependencias
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configurar MongoDB
+
+Asegúrate de tener MongoDB instalado y ejecutándose en:
+```
+mongodb://localhost:27017
+```
+
+### 5. Ejecutar el servidor
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+---
+
+## 🌐 Acceso
+
+Una vez levantado el servidor, accede a:
+- **URL:** http://localhost:8000
 
 ---
 

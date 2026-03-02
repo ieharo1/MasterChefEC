@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Categorías - Admin{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-tags me-2"></i>Gestión de Categorías</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            <i class="fas fa-plus me-1"></i>Nueva Categoría
+        </button>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.description or '-' }}</td>
+                    <td>{{ category.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="deleteCategory('{{ category.id }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No hay categorías</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="categoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Crear Categoría</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {
+        name: formData.get('name'),
+        description: formData.get('description')
+    };
+    
+    const response = await fetch('/admin/categories/create', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams(data)
+    });
+    
+    const result = await response.json();
+    if (result.success) {
+        location.reload();
+    } else {
+        alert(result.message);
+    }
+});
+
+async function deleteCategory(categoryId) {
+    if (confirm('¿Está seguro de eliminar esta categoría?')) {
+        const response = await fetch(`/admin/categories/${categoryId}/delete`, { method: 'POST' });
+        const result = await response.json();
+        if (result.success) location.reload();
+    }
+}
+</script>
+{% endblock %}

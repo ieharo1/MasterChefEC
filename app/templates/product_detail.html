@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - MasterChefEC{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="img-fluid rounded">
+                    {% else %}
+                    <i class="fas fa-box fa-5x text-muted"></i>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p class="text-muted">{{ product.description }}</p>
+            <h3 class="text-primary">${{ "%.2f"|format(product.price) }}</h3>
+            <p><strong>SKU:</strong> {{ product.sku }}</p>
+            <p><strong>Stock:</strong> {{ product.stock }} unidades</p>
+            {% if category %}
+            <p><strong>Categoría:</strong> {{ category.name }}</p>
+            {% endif %}
+            
+            <div class="mt-4">
+                <div class="input-group" style="max-width: 200px;">
+                    <button class="btn btn-outline-secondary" onclick="decreaseQty()">-</button>
+                    <input type="number" id="quantity" class="form-control text-center" value="1" min="1" max="{{ product.stock }}">
+                    <button class="btn btn-outline-secondary" onclick="increaseQty()">+</button>
+                </div>
+                <button onclick="addToCart()" class="btn btn-primary mt-3">
+                    <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function increaseQty() {
+    const input = document.getElementById('quantity');
+    if (parseInt(input.value) < {{ product.stock }}) {
+        input.value = parseInt(input.value) + 1;
+    }
+}
+
+function decreaseQty() {
+    const input = document.getElementById('quantity');
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+    }
+}
+
+async function addToCart() {
+    const quantity = document.getElementById('quantity').value;
+    const response = await fetch('/cart/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'product_id={{ product.id }}&quantity=' + quantity
+    });
+    const result = await response.json();
+    if (result.success) {
+        alert('Producto agregado al carrito');
+    } else {
+        alert(result.message);
+    }
+}
+</script>
+{% endblock %}

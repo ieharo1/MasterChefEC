@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Usuarios - Admin{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2><i class="fas fa-users me-2"></i>Gestión de Usuarios</h2>
+    
+    <div class="table-responsive mt-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone or '-' }}</td>
+                    <td>
+                        <span class="badge {% if user.role.value == 'admin' %}bg-danger{% else %}bg-primary{% endif %}">
+                            {{ user.role.value }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if user.is_active %}
+                        <span class="badge bg-success">Activo</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="toggleUserStatus('{{ user.id }}', {{ user.is_active|lower }})">
+                            <i class="fas fa-toggle-on"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay usuarios</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function toggleUserStatus(userId, currentStatus) {
+    const newStatus = !currentStatus;
+    const response = await fetch(`/admin/users/${userId}/update`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `is_active=${newStatus}`
+    });
+    const result = await response.json();
+    if (result.success) location.reload();
+}
+</script>
+{% endblock %}

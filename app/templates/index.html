@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}MasterChefEC - Inicio{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-4">Bienvenida a MasterChefEC</h1>
+        <p class="lead mb-4">Los mejores productos gourmet para tus recetas</p>
+        <a href="/products" class="btn btn-light btn-lg px-5">
+            <i class="fas fa-store me-2"></i>Ver Productos
+        </a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">¿Por qué elegirnos?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card text-center p-4">
+                <i class="fas fa-shipping-fast fa-3x text-primary mb-3"></i>
+                <h5>Envío Rápido</h5>
+                <p>Entrega a domicilio en tiempo récord</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-4">
+                <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
+                <h5>Productos Frescos</h5>
+                <p>Sélection de los mejores productos</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-4">
+                <i class="fas fa-heart fa-3x text-primary mb-3"></i>
+                <h5>Atención Personalizada</h5>
+                <p>Siempre dispuestas a ayudarte</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Productos Destacados</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="product-card card">
+                <div class="product-image d-flex align-items-center justify-content-center">
+                    <i class="fas fa-cheese fa-3x text-white"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Quesos Premium</h5>
+                    <p class="price">$12.99</p>
+                    <a href="/products" class="btn btn-primary w-100">Ver más</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="product-card card">
+                <div class="product-image d-flex align-items-center justify-content-center">
+                    <i class="fas fa-wine-bottle fa-3x text-white"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Vinos Selectos</h5>
+                    <p class="price">$24.99</p>
+                    <a href="/products" class="btn btn-primary w-100">Ver más</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="product-card card">
+                <div class="product-image d-flex align-items-center justify-content-center">
+                    <i class="fas fa-cookie-bite fa-3x text-white"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Dulces Artesanales</h5>
+                    <p class="price">$8.99</p>
+                    <a href="/products" class="btn btn-primary w-100">Ver más</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="product-card card">
+                <div class="product-image d-flex align-items-center justify-content-center">
+                    <i class="fas fa-olive-oil fa-3x text-white"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Aceite de Oliva</h5>
+                    <p class="price">$18.99</p>
+                    <a href="/products" class="btn btn-primary w-100">Ver más</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

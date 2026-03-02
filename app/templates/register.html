@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Registrarse - MasterChefEC{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+                    </h2>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" name="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>Registrarse
+                        </button>
+                    </form>
+                    <p class="text-center mt-3">
+                        ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        password: formData.get('password')
+    };
+    
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams(data)
+    });
+    
+    if (response.redirected) {
+        window.location.href = response.url;
+    } else {
+        const result = await response.json();
+        if (!result.success) {
+            alert(result.message);
+        }
+    }
+});
+</script>
+{% endblock %}

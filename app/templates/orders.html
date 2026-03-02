@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Pedidos - MasterChefEC{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4"><i class="fas fa-box me-2"></i>Mis Pedidos</h2>
+    
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Pedido #</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id[:8] }}...</td>
+                    <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>${{ "%.2f"|format(order.total) }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if order.status.value == 'pending' %}bg-warning
+                            {% elif order.status.value == 'processing' %}bg-info
+                            {% elif order.status.value == 'shipped' %}bg-primary
+                            {% elif order.status.value == 'delivered' %}bg-success
+                            {% else %}bg-danger{% endif %}">
+                            {{ order.status.value }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/order/{{ order.id }}" class="btn btn-sm btn-primary">Ver Detalle</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+        <h3>No tienes pedidos</h3>
+        <p class="text-muted">¡Haz tu primer pedido!</p>
+        <a href="/products" class="btn btn-primary">Ver Productos</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

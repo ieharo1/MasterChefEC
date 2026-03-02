@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Todos los Pedidos - Admin{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2><i class="fas fa-shopping-bag me-2"></i>Todos los Pedidos</h2>
+    
+    <div class="table-responsive mt-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Pedido #</th>
+                    <th>Usuario ID</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Cambiar Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id[:8] }}...</td>
+                    <td>{{ order.user_id[:8] }}...</td>
+                    <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>${{ "%.2f"|format(order.total) }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if order.status.value == 'pending' %}bg-warning
+                            {% elif order.status.value == 'processing' %}bg-info
+                            {% elif order.status.value == 'shipped' %}bg-primary
+                            {% elif order.status.value == 'delivered' %}bg-success
+                            {% else %}bg-danger{% endif %}">
+                            {{ order.status.value }}
+                        </span>
+                    </td>
+                    <td>
+                        <select class="form-select form-select-sm" onchange="updateStatus('{{ order.id }}', this.value)" style="width: auto;">
+                            <option value="pending" {% if order.status.value == 'pending' %}selected{% endif %}>Pendiente</option>
+                            <option value="processing" {% if order.status.value == 'processing' %}selected{% endif %}>Procesando</option>
+                            <option value="shipped" {% if order.status.value == 'shipped' %}selected{% endif %}>Enviado</option>
+                            <option value="delivered" {% if order.status.value == 'delivered' %}selected{% endif %}>Entregado</option>
+                            <option value="cancelled" {% if order.status.value == 'cancelled' %}selected{% endif %}>Cancelado</option>
+                        </select>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay pedidos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function updateStatus(orderId, status) {
+    const response = await fetch(`/admin/orders/${orderId}/status?status=${status}`, {
+        method: 'POST'
+    });
+    const result = await response.json();
+    if (result.success) {
+        alert('Estado actualizado');
+    }
+}
+</script>
+{% endblock %}
